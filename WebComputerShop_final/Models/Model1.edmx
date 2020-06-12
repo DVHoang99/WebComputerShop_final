@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ComputerShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ComputerShop.dbo.IMG' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="IMG">
+          <Key>
+            <PropertyRef Name="IDIMG" />
+          </Key>
+          <Property Name="IDIMG" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IMGPath" Type="varchar(max)" />
+          <Property Name="idProduct" Type="int" />
+        </EntityType>
+        <EntityType Name="InfoProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PassWord" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="bigint" />
+          <Property Name="Position" Type="varchar" MaxLength="30" />
+          <Property Name="Startus" Type="tinyint" />
+        </EntityType>
+        <Association Name="FK__IMG__idProduct__35BCFE0A">
+          <End Role="InfoProduct" Type="Self.InfoProduct" Multiplicity="0..1" />
+          <End Role="IMG" Type="Self.IMG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoProduct">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IMG">
+              <PropertyRef Name="idProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ComputerShopModelStoreContainer">
+          <EntitySet Name="InfoProduct" EntityType="Self.InfoProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IMG" EntityType="Self.IMG" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [IMG].[IDIMG] AS [IDIMG], 
+    [IMG].[IMGPath] AS [IMGPath], 
+    [IMG].[idProduct] AS [idProduct]
+    FROM [dbo].[IMG] AS [IMG]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__IMG__idProduct__35BCFE0A" Association="Self.FK__IMG__idProduct__35BCFE0A">
+            <End Role="InfoProduct" EntitySet="InfoProduct" />
+            <End Role="IMG" EntitySet="IMG" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ComputerShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ComputerShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="ComputerShopModel.User" />
+          <EntitySet Name="InfoProducts" EntityType="ComputerShopModel.InfoProduct" />
+          <EntitySet Name="IMGs" EntityType="ComputerShopModel.IMG" />
+          <AssociationSet Name="FK__IMG__idProduct__35BCFE0A" Association="ComputerShopModel.FK__IMG__idProduct__35BCFE0A">
+            <End Role="InfoProduct" EntitySet="InfoProducts" />
+            <End Role="IMG" EntitySet="IMGs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PassWord" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Int64" />
+          <Property Name="Position" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Startus" Type="Byte" />
+        </EntityType>
+        <EntityType Name="InfoProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IMGs" Relationship="ComputerShopModel.FK__IMG__idProduct__35BCFE0A" FromRole="InfoProduct" ToRole="IMG" />
+        </EntityType>
+        <EntityType Name="IMG">
+          <Key>
+            <PropertyRef Name="IDIMG" />
+          </Key>
+          <Property Name="IDIMG" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IMGPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="idProduct" Type="Int32" />
+          <NavigationProperty Name="InfoProduct" Relationship="ComputerShopModel.FK__IMG__idProduct__35BCFE0A" FromRole="IMG" ToRole="InfoProduct" />
+        </EntityType>
+        <Association Name="FK__IMG__idProduct__35BCFE0A">
+          <End Type="ComputerShopModel.InfoProduct" Role="InfoProduct" Multiplicity="0..1" />
+          <End Type="ComputerShopModel.IMG" Role="IMG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoProduct">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IMG">
+              <PropertyRef Name="idProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ComputerShopModelStoreContainer" CdmEntityContainer="ComputerShopEntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ComputerShopModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Startus" ColumnName="Startus" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InfoProducts">
+            <EntityTypeMapping TypeName="ComputerShopModel.InfoProduct">
+              <MappingFragment StoreEntitySet="InfoProduct">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMGs">
+            <EntityTypeMapping TypeName="ComputerShopModel.IMG">
+              <MappingFragment StoreEntitySet="IMG">
+                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
+                <ScalarProperty Name="IMGPath" ColumnName="IMGPath" />
+                <ScalarProperty Name="IDIMG" ColumnName="IDIMG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

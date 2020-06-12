@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "SignUp";
+}
+
+<h2>SignUp</h2>
+
+<form method="post" action="/Home/SignUp">
+    <div class="form-group">
+        <label>userName</label>
+        <input id="demo" type="text" class="form-control" name="userName" placeholder="Tên Tai Khoan">
+        @ViewBag.b <br/>
+    </div>
+    <div class="form-group">
+        <label>PassWord</label>
+        <input type="password" class="form-control" name="passWord" placeholder="Tên Tai Khoan">
+    </div>
+        
+        <div class="form-group">
+            <label>REPassword</label>
+            <input type="password" class="form-control" name="rePassWord" placeholder="Password">
+        </div>
+        @ViewBag.a
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+</form>
