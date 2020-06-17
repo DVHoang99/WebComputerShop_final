@@ -17,15 +17,19 @@ namespace WebComputerShop_final.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public InfoProduct()
         {
-            this.IMGs = new HashSet<IMG>();
+            this.Images = new HashSet<Image>();
+            this.carts = new HashSet<cart>();
         }
     
         public int Id { get; set; }
         public Nullable<int> Price { get; set; }
         public string Description { get; set; }
         public string Name { get; set; }
+        public Nullable<int> idProductType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IMG> IMGs { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cart> carts { get; set; }
     }
 }

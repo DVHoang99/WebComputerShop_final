@@ -134,10 +134,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\cart.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClassProduct.cs" />
     <Compile Include="Models\ClassSignIn.cs" />
     <Compile Include="Models\ClassSignUp.cs" />
-    <Compile Include="Models\IMG.cs">
+    <Compile Include="Models\Image.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\InfoProduct.cs">
@@ -158,6 +161,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductType.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -168,10 +174,21 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\fasthover.css" />
+    <Content Include="Content\css\flexslider.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\jquery.countdown.css" />
+    <Content Include="Content\css\popuo-box.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\activities1.jpeg" />
+    <Content Include="img\activities3.jpeg" />
+    <Content Include="img\activities4.jpeg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -182,6 +199,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\bootstrap-3.1.1.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\Model1.edmx">
@@ -191,17 +209,44 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\easyResponsiveTabs.js" />
+    <Content Include="Scripts\imagezoom.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.countdown.js" />
+    <Content Include="Scripts\jquery.flexisel.js" />
+    <Content Include="Scripts\jquery.flexslider.js" />
+    <Content Include="Scripts\jquery.magnific-popup.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.wmuSlider.js" />
+    <Content Include="Scripts\jscustom\script.js" />
+    <Content Include="Scripts\js\bootstrap-3.1.1.min.js" />
+    <Content Include="Scripts\js\easyResponsiveTabs.js" />
+    <Content Include="Scripts\js\imagezoom.js" />
+    <Content Include="Scripts\js\jquery.countdown.js" />
+    <Content Include="Scripts\js\jquery.flexisel.js" />
+    <Content Include="Scripts\js\jquery.flexslider.js" />
+    <Content Include="Scripts\js\jquery.magnific-popup.js" />
+    <Content Include="Scripts\js\jquery.min.js" />
+    <Content Include="Scripts\js\jquery.wmuSlider.js" />
+    <Content Include="Scripts\js\minicart.js" />
+    <Content Include="Scripts\js\script.js" />
+    <Content Include="Scripts\minicart.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\script.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -218,15 +263,17 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\SignInAndSignUp\SignUp.cshtml" />
     <Content Include="Views\Home\SignUp.cshtml" />
-    <Content Include="Views\Home\IndexMain.cshtml" />
     <Content Include="Views\MainProcess\Product.cshtml" />
     <Content Include="Views\SignInAndSignUp\SignIn.cshtml" />
     <Content Include="Views\MainProcess\Index.cshtml" />
+    <Content Include="Views\MainProcess\a.cshtml" />
     <Content Include="Views\MainProcess\AddProduct.cshtml" />
+    <Content Include="Views\MainProcess\ThongBao.cshtml" />
+    <Content Include="Views\MainProcess\SignUp.cshtml" />
+    <Content Include="Views\MainProcess\IndexAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

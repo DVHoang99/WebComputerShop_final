@@ -25,8 +25,10 @@ namespace WebComputerShop_final.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<InfoProduct> InfoProducts { get; set; }
-        public virtual DbSet<IMG> IMGs { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<cart> carts { get; set; }
+        public virtual DbSet<ProductType> ProductTypes { get; set; }
     }
 }

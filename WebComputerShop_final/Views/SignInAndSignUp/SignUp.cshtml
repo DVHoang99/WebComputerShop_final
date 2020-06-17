@@ -110,18 +110,19 @@ body {
     <div class="login-page">
         <div class="form">
             <form method="post" action="/SignInAndSignUp/SignUp" class="register-form">
-                <input type="text" class="form-control" name="UserName" placeholder="name" />
+                <input type="text" class="form-control" name="UserName" placeholder="UserName" />
                 @ViewBag.b <br />
                 <input type="password" class="form-control" name="PassWord" placeholder="password" />
                 <input type="password" class="form-control" name="Repassword" placeholder="repassword" />
                 <input type="text" class="form-control" name="Address" placeholder="Address" />
+                <input type="text" class="form-control" name="Phone" placeholder="Phone Number" />
                 <button type="submit">create</button>
                 <p class="message">Already registered? <a href="#">Sign In</a></p>
                 @ViewBag.a<br />
             </form>
             <form method="post" action="/SignInAndSignUp/SignIn" class="login-form">
-                <input type="text" class="form-control" name="UserName" placeholder="password" />
-                <input type="password" class="form-control" name="PassWord" placeholder="repassword" />
+                <input type="text" class="form-control" name="username" placeholder="password" />
+                <input type="password" class="form-control" name="password" placeholder="repassword" />
                 <button type="submit">login</button>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
             </form>

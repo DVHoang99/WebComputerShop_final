@@ -28,9 +28,6 @@ namespace WebComputerShop_final.Controllers
             return View();
         }
       
-        public ActionResult IndexMain()
-        {
-            return View();
-        }
+
     }
 }

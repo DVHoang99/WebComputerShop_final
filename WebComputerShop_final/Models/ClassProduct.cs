@@ -11,5 +11,11 @@ namespace WebComputerShop_final.Models
         public string Name { get; set; }
         public Nullable<int> price { get; set; }
         public string description { get; set; }
+        public string tilte { get; set; }
+        
+        public string idProduct { get; set; }
+        public string ImgPath { get; set; }
+
+        public HttpPostedFileBase ImageFile { get; set; }
     }
 }

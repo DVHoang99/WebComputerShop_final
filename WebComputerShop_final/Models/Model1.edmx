@@ -5,14 +5,26 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ComputerShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'ComputerShop.dbo.IMG' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="IMG">
+        <EntityType Name="cart">
           <Key>
-            <PropertyRef Name="IDIMG" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="IDIMG" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IMGPath" Type="varchar(max)" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="TotalPrice" Type="float" />
+          <Property Name="NameUser" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Phone" Type="int" />
+          <Property Name="idProduct" Type="int" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="250" />
+          <Property Name="ImagePath" Type="varchar(max)" />
           <Property Name="idProduct" Type="int" />
         </EntityType>
         <EntityType Name="InfoProduct">
@@ -23,6 +35,14 @@ warning 6002: The table/view 'ComputerShop.dbo.IMG' does not have a primary key 
           <Property Name="Price" Type="int" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="idProductType" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ProductType" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -32,34 +52,45 @@ warning 6002: The table/view 'ComputerShop.dbo.IMG' does not have a primary key 
           <Property Name="PassWord" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="Phone" Type="bigint" />
-          <Property Name="Position" Type="varchar" MaxLength="30" />
-          <Property Name="Startus" Type="tinyint" />
+          <Property Name="role" Type="varchar" MaxLength="30" />
         </EntityType>
-        <Association Name="FK__IMG__idProduct__35BCFE0A">
+        <Association Name="FK__cart__idProduct__628FA481">
           <End Role="InfoProduct" Type="Self.InfoProduct" Multiplicity="0..1" />
-          <End Role="IMG" Type="Self.IMG" Multiplicity="*" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="InfoProduct">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="IMG">
+            <Dependent Role="cart">
+              <PropertyRef Name="idProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Image__idProduct__534D60F1">
+          <End Role="InfoProduct" Type="Self.InfoProduct" Multiplicity="0..1" />
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoProduct">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Image">
               <PropertyRef Name="idProduct" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ComputerShopModelStoreContainer">
+          <EntitySet Name="cart" EntityType="Self.cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InfoProduct" EntityType="Self.InfoProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IMG" EntityType="Self.IMG" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [IMG].[IDIMG] AS [IDIMG], 
-    [IMG].[IMGPath] AS [IMGPath], 
-    [IMG].[idProduct] AS [idProduct]
-    FROM [dbo].[IMG] AS [IMG]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK__IMG__idProduct__35BCFE0A" Association="Self.FK__IMG__idProduct__35BCFE0A">
+          <AssociationSet Name="FK__cart__idProduct__628FA481" Association="Self.FK__cart__idProduct__628FA481">
             <End Role="InfoProduct" EntitySet="InfoProduct" />
-            <End Role="IMG" EntitySet="IMG" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Image__idProduct__534D60F1" Association="Self.FK__Image__idProduct__534D60F1">
+            <End Role="InfoProduct" EntitySet="InfoProduct" />
+            <End Role="Image" EntitySet="Image" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -67,24 +98,33 @@ warning 6002: The table/view 'ComputerShop.dbo.IMG' does not have a primary key 
     <edmx:ConceptualModels>
       <Schema Namespace="ComputerShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ComputerShopEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="ComputerShopModel.User" />
+          <EntitySet Name="Images" EntityType="ComputerShopModel.Image" />
           <EntitySet Name="InfoProducts" EntityType="ComputerShopModel.InfoProduct" />
-          <EntitySet Name="IMGs" EntityType="ComputerShopModel.IMG" />
-          <AssociationSet Name="FK__IMG__idProduct__35BCFE0A" Association="ComputerShopModel.FK__IMG__idProduct__35BCFE0A">
+          <EntitySet Name="Users" EntityType="ComputerShopModel.User" />
+          <AssociationSet Name="FK__Image__idProduct__534D60F1" Association="ComputerShopModel.FK__Image__idProduct__534D60F1">
             <End Role="InfoProduct" EntitySet="InfoProducts" />
-            <End Role="IMG" EntitySet="IMGs" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
+          <EntitySet Name="carts" EntityType="ComputerShopModel.cart" />
+          <EntitySet Name="ProductTypes" EntityType="ComputerShopModel.ProductType" />
+          <AssociationSet Name="FK__cart__idProduct__628FA481" Association="ComputerShopModel.FK__cart__idProduct__628FA481">
+            <End Role="InfoProduct" EntitySet="InfoProducts" />
+            <End Role="cart" EntitySet="carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__cart__NameUser__74AE54BC" Association="ComputerShopModel.FK__cart__NameUser__74AE54BC">
+            <End Role="User" EntitySet="Users" />
+            <End Role="cart" EntitySet="carts" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="User">
+        <EntityType Name="Image">
           <Key>
-            <PropertyRef Name="UserName" />
+            <PropertyRef Name="ImageID" />
           </Key>
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PassWord" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="Int64" />
-          <Property Name="Position" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Startus" Type="Byte" />
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="idProduct" Type="Int32" />
+          <NavigationProperty Name="InfoProduct" Relationship="ComputerShopModel.FK__Image__idProduct__534D60F1" FromRole="Image" ToRole="InfoProduct" />
         </EntityType>
         <EntityType Name="InfoProduct">
           <Key>
@@ -94,50 +134,99 @@ warning 6002: The table/view 'ComputerShop.dbo.IMG' does not have a primary key 
           <Property Name="Price" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="IMGs" Relationship="ComputerShopModel.FK__IMG__idProduct__35BCFE0A" FromRole="InfoProduct" ToRole="IMG" />
+          <NavigationProperty Name="Images" Relationship="ComputerShopModel.FK__Image__idProduct__534D60F1" FromRole="InfoProduct" ToRole="Image" />
+          <Property Name="idProductType" Type="Int32" />
+          <NavigationProperty Name="carts" Relationship="ComputerShopModel.FK__cart__idProduct__628FA481" FromRole="InfoProduct" ToRole="cart" />
         </EntityType>
-        <EntityType Name="IMG">
+        <EntityType Name="User">
           <Key>
-            <PropertyRef Name="IDIMG" />
+            <PropertyRef Name="UserName" />
           </Key>
-          <Property Name="IDIMG" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IMGPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="idProduct" Type="Int32" />
-          <NavigationProperty Name="InfoProduct" Relationship="ComputerShopModel.FK__IMG__idProduct__35BCFE0A" FromRole="IMG" ToRole="InfoProduct" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PassWord" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Int64" />
+          <NavigationProperty Name="carts" Relationship="ComputerShopModel.FK__cart__NameUser__74AE54BC" FromRole="User" ToRole="cart" />
+          <Property Name="role" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
-        <Association Name="FK__IMG__idProduct__35BCFE0A">
+        <Association Name="FK__Image__idProduct__534D60F1">
           <End Type="ComputerShopModel.InfoProduct" Role="InfoProduct" Multiplicity="0..1" />
-          <End Type="ComputerShopModel.IMG" Role="IMG" Multiplicity="*" />
+          <End Type="ComputerShopModel.Image" Role="Image" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="InfoProduct">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="IMG">
+            <Dependent Role="Image">
               <PropertyRef Name="idProduct" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="TotalPrice" Type="Double" />
+          <Property Name="NameUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Int32" />
+          <Property Name="idProduct" Type="Int32" />
+          <NavigationProperty Name="InfoProduct" Relationship="ComputerShopModel.FK__cart__idProduct__628FA481" FromRole="cart" ToRole="InfoProduct" />
+          <NavigationProperty Name="User" Relationship="ComputerShopModel.FK__cart__NameUser__74AE54BC" FromRole="cart" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ProductType1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__cart__idProduct__628FA481">
+          <End Type="ComputerShopModel.InfoProduct" Role="InfoProduct" Multiplicity="0..1" />
+          <End Type="ComputerShopModel.cart" Role="cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoProduct">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="idProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__cart__NameUser__74AE54BC">
+          <End Type="ComputerShopModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="ComputerShopModel.cart" Role="cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="NameUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ComputerShopModelStoreContainer" CdmEntityContainer="ComputerShopEntities">
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="ComputerShopModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Startus" ColumnName="Startus" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="ComputerShopModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ImageID" ColumnName="ImageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InfoProducts">
             <EntityTypeMapping TypeName="ComputerShopModel.InfoProduct">
               <MappingFragment StoreEntitySet="InfoProduct">
+                <ScalarProperty Name="idProductType" ColumnName="idProductType" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -145,12 +234,36 @@ warning 6002: The table/view 'ComputerShop.dbo.IMG' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IMGs">
-            <EntityTypeMapping TypeName="ComputerShopModel.IMG">
-              <MappingFragment StoreEntitySet="IMG">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ComputerShopModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="carts">
+            <EntityTypeMapping TypeName="ComputerShopModel.cart">
+              <MappingFragment StoreEntitySet="cart">
                 <ScalarProperty Name="idProduct" ColumnName="idProduct" />
-                <ScalarProperty Name="IMGPath" ColumnName="IMGPath" />
-                <ScalarProperty Name="IDIMG" ColumnName="IDIMG" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="NameUser" ColumnName="NameUser" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypes">
+            <EntityTypeMapping TypeName="ComputerShopModel.ProductType">
+              <MappingFragment StoreEntitySet="ProductType">
+                <ScalarProperty Name="ProductType1" ColumnName="ProductType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -12,12 +12,9 @@ namespace WebComputerShop_final.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class IMG
+    public partial class ProductType
     {
-        public int IDIMG { get; set; }
-        public string IMGPath { get; set; }
-        public Nullable<int> idProduct { get; set; }
-    
-        public virtual InfoProduct InfoProduct { get; set; }
+        public int ID { get; set; }
+        public string ProductType1 { get; set; }
     }
 }

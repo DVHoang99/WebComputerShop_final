@@ -5,10 +5,14 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="93dcd79055b04518938fd18d49e10bff" Name="Diagram1">
-        <EntityTypeShape EntityType="ComputerShopModel.User" Width="1.5" PointX="2.125" PointY="1.375" />
-        <EntityTypeShape EntityType="ComputerShopModel.InfoProduct" Width="1.5" PointX="4.625" PointY="1" />
-        <EntityTypeShape EntityType="ComputerShopModel.IMG" Width="1.5" PointX="6.875" PointY="1.125" />
-        <AssociationConnector Association="ComputerShopModel.FK__IMG__idProduct__35BCFE0A" />
+        <EntityTypeShape EntityType="ComputerShopModel.Image" Width="1.5" PointX="5.25" PointY="0.5" />
+        <EntityTypeShape EntityType="ComputerShopModel.InfoProduct" Width="1.5" PointX="9.75" PointY="0.625" />
+        <EntityTypeShape EntityType="ComputerShopModel.User" Width="1.5" PointX="6.875" PointY="3.5" />
+        <AssociationConnector Association="ComputerShopModel.FK__Image__idProduct__534D60F1" />
+        <EntityTypeShape EntityType="ComputerShopModel.cart" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ComputerShopModel.ProductType" Width="1.5" PointX="3.5" PointY="3.75" />
+        <AssociationConnector Association="ComputerShopModel.FK__cart__idProduct__628FA481" />
+        <AssociationConnector Association="ComputerShopModel.FK__cart__NameUser__74AE54BC" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -29,8 +29,8 @@ namespace WebComputerShop_final.Controllers
                     user.UserName = SignUp.userName;
                     user.PassWord = SignUp.passWord;
                     user.Address = SignUp.address;
-                    user.Position = "Member";
-                    user.Startus = 1;
+                    user.Phone = SignUp.Phone;
+                    user.role = "Member";
                     if (SignUp.rePassWord != SignUp.passWord)
                     {
                         ViewBag.a = "Mật Khẩu và Nhập Lại Mật Khẩu Không Đúng";
@@ -56,20 +56,24 @@ namespace WebComputerShop_final.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult SignIn(ClassSignIn a)
+        public ActionResult SignIn(ClassSignIn SignIn)
         {
             ComputerShopEntities data = new ComputerShopEntities();
-            int b = data.Users.Where(x => x.UserName.Equals(a.UserName) && x.PassWord.Equals(a.PassWord)).Count();
-            if(b == 1)
+            var b = data.Users.Where(x => x.UserName.Equals(SignIn.UserName) && x.PassWord.Equals(SignIn.PassWord)).FirstOrDefault();
+            if (b != null)
             {
-                return RedirectToAction("Index", "MainProcess");
+                if (b.role == "admin" || b.role == "admin")
+                {
+                    Session["SignIn"] = b;
+                    return RedirectToAction("Index", "MainProcess");
+                }
             }
             else
             {
-                ViewBag.a = "Sai Ten Tai Khoan Mat Khau";
-                return View();
+                ViewBag.a = "sai ten tai khoan mat khau";
             }
-            
+            return View();
+
         }
     }
 
