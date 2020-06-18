@@ -12,18 +12,12 @@ namespace WebComputerShop_final.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class cart
+    public partial class sysdiagram
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> Amount { get; set; }
-        public Nullable<double> TotalPrice { get; set; }
-        public string NameUser { get; set; }
-        public string Address { get; set; }
-        public Nullable<long> Phone { get; set; }
-        public Nullable<int> idProduct { get; set; }
-    
-        public virtual InfoProduct InfoProduct { get; set; }
-        public virtual User User { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

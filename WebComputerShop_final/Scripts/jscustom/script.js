@@ -135,6 +135,7 @@ var shoppingCart = (function() {
 // Triggers / Events
 // ***************************************** 
 // Add item
+
 $('.add-to-cart').click(function(event) {
   event.preventDefault();
   var name = $(this).data('name');
@@ -199,7 +200,6 @@ $('.show-cart').on("change", ".item-count", function(event) {
   shoppingCart.setCountForItem(name, count);
   displayCart();
 });
-
 $("#Order").on("click", function () {
     var cartArray = shoppingCart.listCart();
     for (var i in cartArray) {
@@ -228,9 +228,10 @@ $("#Order").on("click", function () {
             }
         })
     }
-    
+
     //console.log(file);
-    
-})
+
+});
+
 
 displayCart();

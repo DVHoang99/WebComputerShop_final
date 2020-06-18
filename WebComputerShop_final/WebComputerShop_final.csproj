@@ -164,6 +164,9 @@
     <Compile Include="Models\ProductType.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -266,11 +269,12 @@
     <Content Include="Views\MainProcess\Product.cshtml" />
     <Content Include="Views\SignInAndSignUp\SignIn.cshtml" />
     <Content Include="Views\MainProcess\Index.cshtml" />
-    <Content Include="Views\MainProcess\a.cshtml" />
     <Content Include="Views\MainProcess\AddProduct.cshtml" />
     <Content Include="Views\MainProcess\ThongBao.cshtml" />
     <Content Include="Views\MainProcess\SignUp.cshtml" />
     <Content Include="Views\MainProcess\IndexAdmin.cshtml" />
+    <Content Include="Views\MainProcess\Edit.cshtml" />
+    <Content Include="Views\MainProcess\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

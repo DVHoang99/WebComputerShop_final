@@ -51,11 +51,6 @@ namespace WebComputerShop_final.Controllers
                 return View();
             }
         }
-
-        public ActionResult SignIn()
-        {
-            return View();
-        }
         [HttpPost]
         public ActionResult SignIn(ClassSignIn SignIn)
         {
@@ -76,7 +71,7 @@ namespace WebComputerShop_final.Controllers
             }
             else
             {
-                ViewBag.a = "sai ten tai khoan mat khau";
+                ViewBag.d = "sai ten tai khoan mat khau";
             }
             return View();
 
@@ -87,20 +82,36 @@ namespace WebComputerShop_final.Controllers
         
         ComputerShopEntities data = new ComputerShopEntities();
 
-         var a = from x in data.InfoProducts select x;
+          var  a = data.InfoProducts;
 
          return View(a);
 
         }
         public ActionResult IndexAdmin()
         {
+            if (Session["SignIn"] == null)
+            {
+                return RedirectToAction("SignUp", "MainProcess");
+            }else
+            {
 
-            ComputerShopEntities data = new ComputerShopEntities();
+                User kq = (User)Session["SignIn"];
+                if (kq.role == "admin")
+                {
+                    ComputerShopEntities data = new ComputerShopEntities();
 
-            var a = from x in data.InfoProducts select x;
+                    var a = from x in data.InfoProducts select x;
 
-            return View(a);
-
+                    return View(a);
+                }
+                    
+                else
+                {
+                    {
+                        return RedirectToAction("ThongBao", new { tenaction = "Contact" });
+                    }
+                }
+            }
         }
 
         public ActionResult Product(ClassProduct b)
@@ -108,10 +119,10 @@ namespace WebComputerShop_final.Controllers
 
             if (Session["SignIn"] == null)
 
-                return RedirectToAction("SignUp", "SignInAndSignUp");
+                return RedirectToAction("SignUp", "MainProcess");
             else
             {
-                ClassSignIn kq = (ClassSignIn)Session["SignIn"];
+                User kq = (User)Session["SignIn"];
 
                 if (kq.role == "admin")
                 {
@@ -192,18 +203,149 @@ namespace WebComputerShop_final.Controllers
         {
             try
             {
-                ComputerShopEntities data = new ComputerShopEntities();
-                cart c = new cart();
-                c.Name = name;
-                c.Amount = amount;
-                c.TotalPrice = TotalPrice;
-                data.carts.Add(c);
+                User b = (User)Session["SignIn"];
+
+                if (b.role == "admin" || b.role == "Member")
+                {
+                    ComputerShopEntities data = new ComputerShopEntities();
+                    cart c = new cart();
+                    c.Name = name;
+                    c.Amount = amount;
+                    c.TotalPrice = TotalPrice;
+                    c.Name = b.UserName;
+                    c.Phone = b.Phone;
+                    c.Address = b.Address;
+                    data.carts.Add(c);
+                    data.SaveChanges();
+                    return Json(1);
+                }
+                else
+                {
+                    return RedirectToAction("ThongBao", new { tenaction = "Contact" });
+                }
+
+            } catch (Exception ex)
+            {
+                return Json(0);
+            }
+
+        }
+
+        public ActionResult Edit()
+        {
+            if (Session["SignIn"] == null)
+
+                return RedirectToAction("SignUp", "MainProcess");
+            else
+            {
+                User b = (User)Session["SignIn"];
+
+                if (b.role == "admin")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("ThongBao", new { tenaction = "Contact" });
+                }
+            }
+        }
+
+        public ActionResult Edit(ClassProduct a, Image imageModel, HttpPostedFileBase ImageFile)
+        {
+            ComputerShopEntities data = new ComputerShopEntities();
+            var u = data.InfoProducts.Where(x => x.Id == a.id).FirstOrDefault();
+            var t = data.Images.Where(x => x.idProduct == a.id).FirstOrDefault();
+            var c = 0;
+            if (u != null)
+            {
+                data.Images.Remove(t);
+                data.InfoProducts.Remove(u);
                 data.SaveChanges();
-                return Json(1);
             }
-            catch (Exception ex)
-            { return Json(0); }
+            if (a.idProduct == "laptop")
+            {
+                c = 2;
             }
+            else
+            {
+                c = 1;
+            }
+            InfoProduct b = new InfoProduct();
+            b.Name = a.Name;
+            b.Price = a.price;
+            b.Description = a.description;
+            b.idProductType = c;
+            data.InfoProducts.Add(b);
+            data.SaveChanges();
+            imageModel.idProduct = b.Id;
+            imageModel.Title = b.Name;
+            string fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
+            string extension = Path.GetExtension(ImageFile.FileName);
+            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            imageModel.ImagePath = fileName;
+            fileName = Path.Combine(Server.MapPath("~/img/"), fileName);
+            ImageFile.SaveAs(fileName);
+            using (ComputerShopEntities db = new ComputerShopEntities())
+            {
+                db.Images.Add(imageModel);
+                db.SaveChanges();
+            }
+            ModelState.Clear();
+            return View();
+        }
+
+        public ActionResult Delete()
+        {
+            if (Session["SignIn"] == null)
+
+                return RedirectToAction("SignUp", "MainProcess");
+            else
+            {
+                User b = (User)Session["SignIn"];
+
+                if (b.role == "admin")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("ThongBao", new { tenaction = "Contact" });
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+                ComputerShopEntities data = new ComputerShopEntities();
+                var b = data.InfoProducts.Where(x => x.Id == id).FirstOrDefault();
+                var a = data.Images.Where(x => x.idProduct == id).FirstOrDefault();
+
+                if (b != null)
+                {
+                    data.Images.Remove(a);
+                    data.InfoProducts.Remove(b);
+                    data.SaveChanges();
+                }
+            ModelState.Clear();
+            return View();
+
+        }
+
+        public ActionResult Kiemtra()
+        {
+            if (Session["SignIn"] == null)
+            {
+                return RedirectToAction("SignUp", "MainProcess");
+            }
+            else
+            {
+                return RedirectToAction("Index", "MainProcess");
+            }
+
+            
+        }
 
     }
 }

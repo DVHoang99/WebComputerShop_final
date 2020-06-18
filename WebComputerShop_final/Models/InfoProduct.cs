@@ -17,8 +17,8 @@ namespace WebComputerShop_final.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public InfoProduct()
         {
-            this.Images = new HashSet<Image>();
             this.carts = new HashSet<cart>();
+            this.Images = new HashSet<Image>();
         }
     
         public int Id { get; set; }
@@ -28,8 +28,9 @@ namespace WebComputerShop_final.Models
         public Nullable<int> idProductType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Image> Images { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cart> carts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Image> Images { get; set; }
+        public virtual ProductType ProductType { get; set; }
     }
 }

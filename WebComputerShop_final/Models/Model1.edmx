@@ -15,7 +15,7 @@
           <Property Name="TotalPrice" Type="float" />
           <Property Name="NameUser" Type="varchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar(max)" />
-          <Property Name="Phone" Type="int" />
+          <Property Name="Phone" Type="bigint" />
           <Property Name="idProduct" Type="int" />
         </EntityType>
         <EntityType Name="Image">
@@ -44,6 +44,16 @@
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="ProductType" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserName" />
@@ -66,6 +76,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__cart__NameUser__01142BA1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserName" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="NameUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Image__idProduct__534D60F1">
           <End Role="InfoProduct" Type="Self.InfoProduct" Multiplicity="0..1" />
           <End Role="Image" Type="Self.Image" Multiplicity="*" />
@@ -78,19 +100,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__InfoProdu__idPro__00200768">
+          <End Role="ProductType" Type="Self.ProductType" Multiplicity="0..1" />
+          <End Role="InfoProduct" Type="Self.InfoProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InfoProduct">
+              <PropertyRef Name="idProductType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ComputerShopModelStoreContainer">
           <EntitySet Name="cart" EntityType="Self.cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InfoProduct" EntityType="Self.InfoProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__cart__idProduct__628FA481" Association="Self.FK__cart__idProduct__628FA481">
             <End Role="InfoProduct" EntitySet="InfoProduct" />
             <End Role="cart" EntitySet="cart" />
           </AssociationSet>
+          <AssociationSet Name="FK__cart__NameUser__01142BA1" Association="Self.FK__cart__NameUser__01142BA1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
           <AssociationSet Name="FK__Image__idProduct__534D60F1" Association="Self.FK__Image__idProduct__534D60F1">
             <End Role="InfoProduct" EntitySet="InfoProduct" />
             <End Role="Image" EntitySet="Image" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InfoProdu__idPro__00200768" Association="Self.FK__InfoProdu__idPro__00200768">
+            <End Role="ProductType" EntitySet="ProductType" />
+            <End Role="InfoProduct" EntitySet="InfoProduct" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -98,24 +141,44 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ComputerShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ComputerShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="carts" EntityType="ComputerShopModel.cart" />
           <EntitySet Name="Images" EntityType="ComputerShopModel.Image" />
           <EntitySet Name="InfoProducts" EntityType="ComputerShopModel.InfoProduct" />
-          <EntitySet Name="Users" EntityType="ComputerShopModel.User" />
-          <AssociationSet Name="FK__Image__idProduct__534D60F1" Association="ComputerShopModel.FK__Image__idProduct__534D60F1">
-            <End Role="InfoProduct" EntitySet="InfoProducts" />
-            <End Role="Image" EntitySet="Images" />
-          </AssociationSet>
-          <EntitySet Name="carts" EntityType="ComputerShopModel.cart" />
           <EntitySet Name="ProductTypes" EntityType="ComputerShopModel.ProductType" />
+          <EntitySet Name="sysdiagrams" EntityType="ComputerShopModel.sysdiagram" />
+          <EntitySet Name="Users" EntityType="ComputerShopModel.User" />
           <AssociationSet Name="FK__cart__idProduct__628FA481" Association="ComputerShopModel.FK__cart__idProduct__628FA481">
             <End Role="InfoProduct" EntitySet="InfoProducts" />
             <End Role="cart" EntitySet="carts" />
           </AssociationSet>
-          <AssociationSet Name="FK__cart__NameUser__74AE54BC" Association="ComputerShopModel.FK__cart__NameUser__74AE54BC">
+          <AssociationSet Name="FK__cart__NameUser__01142BA1" Association="ComputerShopModel.FK__cart__NameUser__01142BA1">
             <End Role="User" EntitySet="Users" />
             <End Role="cart" EntitySet="carts" />
           </AssociationSet>
+          <AssociationSet Name="FK__Image__idProduct__534D60F1" Association="ComputerShopModel.FK__Image__idProduct__534D60F1">
+            <End Role="InfoProduct" EntitySet="InfoProducts" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InfoProdu__idPro__00200768" Association="ComputerShopModel.FK__InfoProdu__idPro__00200768">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="InfoProduct" EntitySet="InfoProducts" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="TotalPrice" Type="Double" />
+          <Property Name="NameUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Int64" />
+          <Property Name="idProduct" Type="Int32" />
+          <NavigationProperty Name="InfoProduct" Relationship="ComputerShopModel.FK__cart__idProduct__628FA481" FromRole="cart" ToRole="InfoProduct" />
+          <NavigationProperty Name="User" Relationship="ComputerShopModel.FK__cart__NameUser__01142BA1" FromRole="cart" ToRole="User" />
+        </EntityType>
         <EntityType Name="Image">
           <Key>
             <PropertyRef Name="ImageID" />
@@ -134,9 +197,28 @@
           <Property Name="Price" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Images" Relationship="ComputerShopModel.FK__Image__idProduct__534D60F1" FromRole="InfoProduct" ToRole="Image" />
           <Property Name="idProductType" Type="Int32" />
           <NavigationProperty Name="carts" Relationship="ComputerShopModel.FK__cart__idProduct__628FA481" FromRole="InfoProduct" ToRole="cart" />
+          <NavigationProperty Name="Images" Relationship="ComputerShopModel.FK__Image__idProduct__534D60F1" FromRole="InfoProduct" ToRole="Image" />
+          <NavigationProperty Name="ProductType" Relationship="ComputerShopModel.FK__InfoProdu__idPro__00200768" FromRole="InfoProduct" ToRole="ProductType" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ProductType1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="InfoProducts" Relationship="ComputerShopModel.FK__InfoProdu__idPro__00200768" FromRole="ProductType" ToRole="InfoProduct" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -146,42 +228,8 @@
           <Property Name="PassWord" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="Int64" />
-          <NavigationProperty Name="carts" Relationship="ComputerShopModel.FK__cart__NameUser__74AE54BC" FromRole="User" ToRole="cart" />
           <Property Name="role" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK__Image__idProduct__534D60F1">
-          <End Type="ComputerShopModel.InfoProduct" Role="InfoProduct" Multiplicity="0..1" />
-          <End Type="ComputerShopModel.Image" Role="Image" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InfoProduct">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Image">
-              <PropertyRef Name="idProduct" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="cart">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Amount" Type="Int32" />
-          <Property Name="TotalPrice" Type="Double" />
-          <Property Name="NameUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Phone" Type="Int32" />
-          <Property Name="idProduct" Type="Int32" />
-          <NavigationProperty Name="InfoProduct" Relationship="ComputerShopModel.FK__cart__idProduct__628FA481" FromRole="cart" ToRole="InfoProduct" />
-          <NavigationProperty Name="User" Relationship="ComputerShopModel.FK__cart__NameUser__74AE54BC" FromRole="cart" ToRole="User" />
-        </EntityType>
-        <EntityType Name="ProductType">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="ProductType1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="carts" Relationship="ComputerShopModel.FK__cart__NameUser__01142BA1" FromRole="User" ToRole="cart" />
         </EntityType>
         <Association Name="FK__cart__idProduct__628FA481">
           <End Type="ComputerShopModel.InfoProduct" Role="InfoProduct" Multiplicity="0..1" />
@@ -195,7 +243,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__cart__NameUser__74AE54BC">
+        <Association Name="FK__cart__NameUser__01142BA1">
           <End Type="ComputerShopModel.User" Role="User" Multiplicity="0..1" />
           <End Type="ComputerShopModel.cart" Role="cart" Multiplicity="*" />
           <ReferentialConstraint>
@@ -207,12 +255,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Image__idProduct__534D60F1">
+          <End Type="ComputerShopModel.InfoProduct" Role="InfoProduct" Multiplicity="0..1" />
+          <End Type="ComputerShopModel.Image" Role="Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InfoProduct">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="idProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InfoProdu__idPro__00200768">
+          <End Type="ComputerShopModel.ProductType" Role="ProductType" Multiplicity="0..1" />
+          <End Type="ComputerShopModel.InfoProduct" Role="InfoProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InfoProduct">
+              <PropertyRef Name="idProductType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ComputerShopModelStoreContainer" CdmEntityContainer="ComputerShopEntities">
+          <EntitySetMapping Name="carts">
+            <EntityTypeMapping TypeName="ComputerShopModel.cart">
+              <MappingFragment StoreEntitySet="cart">
+                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="NameUser" ColumnName="NameUser" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Images">
             <EntityTypeMapping TypeName="ComputerShopModel.Image">
               <MappingFragment StoreEntitySet="Image">
@@ -234,6 +320,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypes">
+            <EntityTypeMapping TypeName="ComputerShopModel.ProductType">
+              <MappingFragment StoreEntitySet="ProductType">
+                <ScalarProperty Name="ProductType1" ColumnName="ProductType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ComputerShopModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ComputerShopModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -242,28 +347,6 @@
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="PassWord" ColumnName="PassWord" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="carts">
-            <EntityTypeMapping TypeName="ComputerShopModel.cart">
-              <MappingFragment StoreEntitySet="cart">
-                <ScalarProperty Name="idProduct" ColumnName="idProduct" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="NameUser" ColumnName="NameUser" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductTypes">
-            <EntityTypeMapping TypeName="ComputerShopModel.ProductType">
-              <MappingFragment StoreEntitySet="ProductType">
-                <ScalarProperty Name="ProductType1" ColumnName="ProductType" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

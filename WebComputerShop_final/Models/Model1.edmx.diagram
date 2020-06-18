@@ -5,14 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="93dcd79055b04518938fd18d49e10bff" Name="Diagram1">
-        <EntityTypeShape EntityType="ComputerShopModel.Image" Width="1.5" PointX="5.25" PointY="0.5" />
-        <EntityTypeShape EntityType="ComputerShopModel.InfoProduct" Width="1.5" PointX="9.75" PointY="0.625" />
-        <EntityTypeShape EntityType="ComputerShopModel.User" Width="1.5" PointX="6.875" PointY="3.5" />
-        <AssociationConnector Association="ComputerShopModel.FK__Image__idProduct__534D60F1" />
-        <EntityTypeShape EntityType="ComputerShopModel.cart" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ComputerShopModel.ProductType" Width="1.5" PointX="3.5" PointY="3.75" />
+        <EntityTypeShape EntityType="ComputerShopModel.cart" Width="1.5" PointX="9" PointY="2.25" />
+        <EntityTypeShape EntityType="ComputerShopModel.Image" Width="1.5" PointX="10.375" PointY="6.125" />
+        <EntityTypeShape EntityType="ComputerShopModel.InfoProduct" Width="1.5" PointX="6.75" PointY="2.375" />
+        <EntityTypeShape EntityType="ComputerShopModel.ProductType" Width="1.5" PointX="4.5" PointY="2.875" />
+        <EntityTypeShape EntityType="ComputerShopModel.sysdiagram" Width="1.5" PointX="11.5" PointY="0.5" />
+        <EntityTypeShape EntityType="ComputerShopModel.User" Width="1.5" PointX="3" PointY="5.25" />
         <AssociationConnector Association="ComputerShopModel.FK__cart__idProduct__628FA481" />
-        <AssociationConnector Association="ComputerShopModel.FK__cart__NameUser__74AE54BC" />
+        <AssociationConnector Association="ComputerShopModel.FK__cart__NameUser__01142BA1" />
+        <AssociationConnector Association="ComputerShopModel.FK__Image__idProduct__534D60F1" />
+        <AssociationConnector Association="ComputerShopModel.FK__InfoProdu__idPro__00200768" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
