@@ -194,6 +194,7 @@ namespace WebComputerShop_final.Controllers
                 {
                     db.Images.Add(imageModel);
                     db.SaveChanges();
+                ViewBag.a = "Thêm sản phẩm thành cống";
                 }
                 ModelState.Clear();
                 return View();
@@ -231,18 +232,21 @@ namespace WebComputerShop_final.Controllers
 
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
             if (Session["SignIn"] == null)
-
+            {
                 return RedirectToAction("SignUp", "MainProcess");
+            }    
             else
             {
                 User b = (User)Session["SignIn"];
 
                 if (b.role == "admin")
                 {
-                    return View();
+                    ComputerShopEntities data = new ComputerShopEntities();
+                    var ed = data.InfoProducts.Where(x => x.Id == id).FirstOrDefault();
+                    return View(ed);
                 }
                 else
                 {
@@ -250,19 +254,23 @@ namespace WebComputerShop_final.Controllers
                 }
             }
         }
-
+        [HttpPost]
         public ActionResult Edit(ClassProduct a, Image imageModel, HttpPostedFileBase ImageFile)
         {
             ComputerShopEntities data = new ComputerShopEntities();
             var u = data.InfoProducts.Where(x => x.Id == a.id).FirstOrDefault();
-            var t = data.Images.Where(x => x.idProduct == a.id).FirstOrDefault();
-            var c = 0;
-            if (u != null)
+            var y = data.Images.Where(k => k.idProduct == a.id).FirstOrDefault();
+            if(u !=null)
             {
-                data.Images.Remove(t);
+                if (y != null)
+                {
+                    data.Images.Remove(y);
+                }
+                
                 data.InfoProducts.Remove(u);
                 data.SaveChanges();
             }
+            int c = 0;
             if (a.idProduct == "laptop")
             {
                 c = 2;
@@ -271,6 +279,7 @@ namespace WebComputerShop_final.Controllers
             {
                 c = 1;
             }
+
             InfoProduct b = new InfoProduct();
             b.Name = a.Name;
             b.Price = a.price;
@@ -290,12 +299,15 @@ namespace WebComputerShop_final.Controllers
             {
                 db.Images.Add(imageModel);
                 db.SaveChanges();
+                ViewBag.a = "Sửa thành công";
             }
+            
             ModelState.Clear();
             return View();
         }
+    
 
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
             if (Session["SignIn"] == null)
 
@@ -306,31 +318,26 @@ namespace WebComputerShop_final.Controllers
 
                 if (b.role == "admin")
                 {
-                    return View();
+                    ComputerShopEntities data = new ComputerShopEntities();
+                    var u = data.InfoProducts.Where(x => x.Id == id).FirstOrDefault();
+                    var y = data.Images.Where(k => k.idProduct == id).FirstOrDefault();
+                    if (u != null)
+                    {
+                        if (y != null)
+                        {
+                            data.Images.Remove(y);
+                        }
+
+                        data.InfoProducts.Remove(u);
+                        data.SaveChanges();
+                    }
+                    return RedirectToAction ("IndexAdmin", "MainProcess");
                 }
                 else
                 {
                     return RedirectToAction("ThongBao", new { tenaction = "Contact" });
                 }
             }
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-                ComputerShopEntities data = new ComputerShopEntities();
-                var b = data.InfoProducts.Where(x => x.Id == id).FirstOrDefault();
-                var a = data.Images.Where(x => x.idProduct == id).FirstOrDefault();
-
-                if (b != null)
-                {
-                    data.Images.Remove(a);
-                    data.InfoProducts.Remove(b);
-                    data.SaveChanges();
-                }
-            ModelState.Clear();
-            return View();
-
         }
 
         public ActionResult Kiemtra()

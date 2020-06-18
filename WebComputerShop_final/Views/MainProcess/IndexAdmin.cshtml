@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<WebComputerShop_final.Models.InfoProduct>
+
 @{
+    ViewBag.Title = "IndexAdmin";
     Layout = null;
-    var a = 0;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,12 +59,6 @@
                 <h1><a href="index.html">Computer Shop<span>Your stores. Your place.</span></a></h1>
             </div>
 
-            <div class="cart cart box_1">
-                <form action="#" method="post" class="last">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>(<span class="total-count"></span>)</button>
-                    <button class="clear-cart btn btn-danger"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>Clear Cart</button>
-                </form>
-            </div>
         </div>
     </div>
     <!-- //header -->
@@ -88,239 +84,92 @@
                             <li><a href="about.html">About Us</a></li>
 
                             <li><a href="mail.html">Mail Us</a></li>
-                            <li>@Html.ActionLink("Add Product", "AddProduct", "MainProcess")</li>
+                            <li>@Html.ActionLink("Thêm sản phẩm", "AddProduct", "MainProcess")</li>
                         </ul>
                     </div>
                 </nav>
             </div>
         </div>
-        <!-- //navigation -->
-        <!-- banner -->
-    </div>
-    <!-- //banner -->
-    <!-- banner-bottom -->
-    <div class="banner-bottom container-fluid">
-        <div class="container " style="margin-left: 25%">
 
-            <div class="col-md-7 wthree_banner_bottom_right">
-                <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
-                    <ul id="myTab" class="nav nav-tabs" role="tablist" style="margin-left:130px;">
-                        <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home">Desktop</a></li>
-                        <li role="presentation"><a href="#audio" role="tab" id="audio-tab" data-toggle="tab" aria-controls="audio">Laptop</a></li>
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.idProductType)
+                </th>
+                <th>
+                    Hình ảnh
+                </th>
+                <th></th>
+            </tr>
 
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.idProductType)
+                    </td>
+                    @foreach (var item1 in item.Images)
+                    {
+                        <td>
+                            <img src="~/img/@item1.ImagePath" alt="@item.Name" style="width:70px; height: 70px;" />
+                        </td>
+                    }
+
+                    <td>
+                        <div class="btn btn-default">@Html.ActionLink("Edit", "Edit", new { id = item.Id })</div> |
+                        <div class="btn btn-danger">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</div>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <div style="padding-bottom: 55px; background-color: #3c43a4;"></div>
+        <!-- footer -->
+        <div class="footer">
+            <div class="container-fluid">
+                <div class="w3_footer_grids">
+
+                    <h3 style="text-align: center;">Contact</h3>
+                    <p style="text-align:center;">Duis aute irure dolor in reprehenderit in voluptate velit esse.</p> <!-- sửa chỗ này nha -->
+                    <ul class="address" style="text-align:center;">
+                        <li style="list-style-type: none">1234k Avenue, 4th block, <span>New York City.</span></li> <!-- sửa chỗ này nha -->
+                        <li style="list-style-type: none"><a href="#">info@gmail.com</a></li> <!-- sửa chỗ này nha -->
+                        <li style="list-style-type: none">0373094064</li> <!-- sửa chỗ này nha -->
                     </ul>
                 </div>
-                <div id="myTabContent" class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
-                        <div class="agile_ecommerce_tabs">
-                            @foreach (var item in Model)
-                            {
-
-                            <label>Mã sản phẩm: <span> @item.Id</span></label>
-                                if (item.idProductType == 1)
-                                {
-
-                                    <div class="col-md-4 agile_ecommerce_tab_left">
-                                        <div class="hs-wrapper">
-                                            @foreach (var item1 in item.Images)
-                                            {
-                                                if (item1.idProduct == a)
-                                                {
-
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                }
-
-                                            }
-
-                                            <div class="w3_hs_bottom">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#@item.Id"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
 
 
-                                        <h5><a href="single.html">@item.Name</a></h5>
 
-                                        <div class="simpleCart_shelfItem">
-                                            <i class="item_price">@item.Price</i>
-                                            <div>
-                                                <button href="#" data-name="@item.Name" data-price="@item.Price" class="add-to-cart btn btn-primary">Add to cart</button>
-
-                                                <input style="display:none;" type="text" name="id" value="@item.Id" />
-                                                <div>@Html.ActionLink("Delete", "Delete", "MainProcess")</div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                }
-
-                                @*===================================================================================================================================*@
-                            }
-                            <div class="clearfix"> </div>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="audio" aria-labelledby="audio-tab">
-                        <div class="agile_ecommerce_tabs">
-                            @foreach (var item in Model)
-                            {
-                            <label>Mã sản phẩm: <span> @item.Id</span></label>
-                                if (item.idProductType == 2)
-                                {
-
-                                    <div class="col-md-4 agile_ecommerce_tab_left">
-                                        <div class="hs-wrapper">
-                                            @foreach (var item1 in item.Images)
-                                            {
-                                                if (item1.idProduct == a)
-                                                {
-
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" style="width: 90%; margin-top: 50px; margin-left:10%;" />
-                                                }
-
-                                            }
-
-                                            <div class="w3_hs_bottom">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" data-toggle="modal" data-target="#@item.Id"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-
-                                        <h5><a href="single.html">@item.Name</a></h5>
-
-                                        <div class="simpleCart_shelfItem">
-                                            <i class="item_price">@item.Price</i>
-                                            <div>
-                                                <button href="#" data-name="@item.Name" data-price="@item.Price" class="add-to-cart btn btn-primary">Add to cart</button>
-
-                                                <button id="Button12" class="btn btn-success UpdateButton" data-toggle="modal" data-target="#myModalXoa">Xóa</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-
-                                @*===================================================================================================================================*@
-                            }
-                            <div class="clearfix"> </div>
-                        </div>
-                    </div>
-                </div>
+                <p style="text-align:center">&copy; 2020 Conputer Store. All rights reserved | Design by My Team</p>
             </div>
         </div>
-    </div>
-    <!-- //banner-bottom -->
-    <!-- modal-video -->
-    @foreach (var item in Model)
-    {
-        <div class="modal video-modal fade" id="@item.Id" tabindex="-1" role="dialog" aria-labelledby="myModal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <section>
-                        <div class="modal-body">
-                            @foreach (var item1 in item.Images)
-                            {
-
-                                <div class="col-md-5 modal_body_left">
-                                    <img src="~/img/@item1.ImagePath" alt=" " class="img-responsive" />
-                                </div>
-                            }
-
-                            <div class="col-md-7 modal_body_right">
-                                <h4>@item.Name</h4>
-                                <p>
-                                    @item.Description
-                                </p>
-                                <div class="modal_body_right_cart simpleCart_shelfItem">
-                                    <i class="item_price">@item.Price</i>
-                                    <form action="#" method="post">
-                                        <input type="hidden" name="cmd" value="_cart">
-                                        <input type="hidden" name="add" value="1">
-                                        <input type="hidden" name="w3ls_item" value="@item.Name">
-                                        <input type="hidden" name="amount" value="@item.Price">
-                                        <button type="submit" class="w3ls-cart">Add to cart</button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="clearfix"> </div>
-                        </div>
-                    </section>
-                </div>
-
-            </div>
-
-        </div>
-    }
-    <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
-                </div>
-                <div class="modal-body">
-                    <table class="show-cart table">
-                    </table>
-                    <div>Total price: <span class="total-cart"></span></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id="Order" class="btn btn-primary">Order now</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div style="padding-bottom: 55px; background-color: #3c43a4;"></div>
 
 
 
-    <!-- footer -->
-    <div class="footer">
-        <div class="container-fluid">
-            <div class="w3_footer_grids">
-
-                <h3 style="text-align: center;">Contact</h3>
-                <p style="text-align:center;">Duis aute irure dolor in reprehenderit in voluptate velit esse.</p> <!-- sửa chỗ này nha -->
-                <ul class="address" style="text-align:center;">
-                    <li style="list-style-type: none">1234k Avenue, 4th block, <span>New York City.</span></li> <!-- sửa chỗ này nha -->
-                    <li style="list-style-type: none"><a href="mailto:info@example.com">info@example.com</a></li> <!-- sửa chỗ này nha -->
-                    <li style="list-style-type: none">+1234 567 567</li> <!-- sửa chỗ này nha -->
-                </ul>
-            </div>
-
-
-
-            <p style="text-align:center">&copy; 2020 Conputer Store. All rights reserved | Design by My Team</p>
-        </div>
-    </div>
-
-   
-
-    <!-- //footer -->
-    <!-- cart-js -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
-    <script src="~/Scripts/jscustom/script.js"></script>
+        <!-- //footer -->
+        <!-- cart-js -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+        <script src="~/Scripts/jscustom/script.js"></script>
 </body>
 </html>

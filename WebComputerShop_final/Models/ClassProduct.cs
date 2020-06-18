@@ -12,7 +12,10 @@ namespace WebComputerShop_final.Models
         public Nullable<int> price { get; set; }
         public string description { get; set; }
         public string tilte { get; set; }
-        
+
+        public string idProductType { get; set; }
+
+
         public string idProduct { get; set; }
         public string ImgPath { get; set; }
 
