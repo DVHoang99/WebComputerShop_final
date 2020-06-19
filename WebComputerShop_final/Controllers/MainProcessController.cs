@@ -204,26 +204,34 @@ namespace WebComputerShop_final.Controllers
         {
             try
             {
-                User b = (User)Session["SignIn"];
-
-                if (b.role == "admin" || b.role == "Member")
+                if(Session["SignIn"] != null)
                 {
-                    ComputerShopEntities data = new ComputerShopEntities();
-                    cart c = new cart();
-                    c.Name = name;
-                    c.Amount = amount;
-                    c.TotalPrice = TotalPrice;
-                    c.Name = b.UserName;
-                    c.Phone = b.Phone;
-                    c.Address = b.Address;
-                    data.carts.Add(c);
-                    data.SaveChanges();
-                    return Json(1);
+                    User b = (User)Session["SignIn"];
+
+                    if (b.role == "admin" || b.role == "Member")
+                    {
+                        ComputerShopEntities data = new ComputerShopEntities();
+                        cart c = new cart();
+                        c.Name = name;
+                        c.Amount = amount;
+                        c.TotalPrice = TotalPrice;
+                        c.Name = b.UserName;
+                        c.Phone = b.Phone;
+                        c.Address = b.Address;
+                        data.carts.Add(c);
+                        data.SaveChanges();
+                        return Json(1);
+                    }
+                    else
+                    {
+                        return RedirectToAction("ThongBao", new { tenaction = "Contact" });
+                    }
                 }
                 else
                 {
-                    return RedirectToAction("ThongBao", new { tenaction = "Contact" });
+                    return Json(0);
                 }
+                
 
             } catch (Exception ex)
             {
@@ -353,6 +361,21 @@ namespace WebComputerShop_final.Controllers
 
             
         }
+        public ActionResult LogInLogOut()
+        {
+            if (Session["SignIn"] == null)
+            {
+                return RedirectToAction("SignUp", "MainProcess");
+            }
+            else
+            {
+                Session["SignIn"] = null;
+                return RedirectToAction("Index", "MainProcess");
+            }
+
+
+        }
 
     }
+   
 }

@@ -83,11 +83,8 @@
 					<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
 						<ul class="nav navbar-nav" style="margin-left: 130px;">
 							<li><a href="index.html" class="act">Home</a></li>
-							<!-- Mega Menu -->
-							
-							<li><a href="about.html">About Us</a></li>
-							
-							<li><a href="mail.html">Mail Us</a></li>
+							<!-- Mega Menu -->							
+							<li>@Html.ActionLink("Login/Logout", "LogInLogOut", "MainProcess")</li>
 						</ul>
 					</div>
 				</nav>
@@ -140,7 +137,7 @@
 											<div class="w3_hs_bottom">
 												<ul>
 													<li>
-														<a href="#" data-toggle="modal" data-target="#@item.Id"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+														<a href="#" data-toggle="modal" data-target="#@item.Id"><span><i class="fa fa-eye" aria-hidden="true"></i></span></a>
 													</li>
 												</ul>
 											</div>
@@ -194,7 +191,7 @@
 											<div class="w3_hs_bottom">
 												<ul>
 													<li>
-														<a href="#" data-toggle="modal" data-target="#@item.Id"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+														<a href="#" data-toggle="modal" data-target="#@item.Id"><span ><i class="fa fa-eye" aria-hidden="true"></i></span></a>
 													</li>
 												</ul>
 											</div>

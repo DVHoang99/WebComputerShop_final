@@ -16,7 +16,7 @@ namespace WebComputerShop_final
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "MainProcess", action = "SignUp", id = UrlParameter.Optional }
+                defaults: new { controller = "MainProcess", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

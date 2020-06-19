@@ -125,7 +125,7 @@
     <div class="login-page">
         <div class="form">
             <form method="post" action="/MainProcess/SignUp" class="register-form">
-                <input type="text" class="form-control" name="UserName" placeholder="UserName" />
+                <input type="text" class="form-control" name="UserName" placeholder="User Name" />
                 @ViewBag.b <br />
                 <input type="password" class="form-control" name="PassWord" placeholder="password" />
                 <input type="password" class="form-control" name="Repassword" placeholder="repassword" />
@@ -138,8 +138,8 @@
                 @ViewBag.c
                 @ViewBag.d
             <form method="post" action="/MainProcess/SignIn" class="login-form">
-                <input type="text" class="form-control" name="username" placeholder="password" />
-                <input type="password" class="form-control" name="password" placeholder="repassword" />
+                <input type="text" class="form-control" name="username" placeholder="User Name" />
+                <input type="password" class="form-control" name="password" placeholder="password" />
                 <button type="submit">login</button>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
             </form>
