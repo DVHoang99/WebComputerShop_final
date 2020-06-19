@@ -44,16 +44,6 @@
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="ProductType" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserName" />
@@ -76,7 +66,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__cart__NameUser__01142BA1">
+        <Association Name="FK__cart__NameUser__1A14E395">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="cart" Type="Self.cart" Multiplicity="*" />
           <ReferentialConstraint>
@@ -100,7 +90,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InfoProdu__idPro__00200768">
+        <Association Name="FK__InfoProdu__idPro__1BFD2C07">
           <End Role="ProductType" Type="Self.ProductType" Multiplicity="0..1" />
           <End Role="InfoProduct" Type="Self.InfoProduct" Multiplicity="*" />
           <ReferentialConstraint>
@@ -117,13 +107,12 @@
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InfoProduct" EntityType="Self.InfoProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__cart__idProduct__628FA481" Association="Self.FK__cart__idProduct__628FA481">
             <End Role="InfoProduct" EntitySet="InfoProduct" />
             <End Role="cart" EntitySet="cart" />
           </AssociationSet>
-          <AssociationSet Name="FK__cart__NameUser__01142BA1" Association="Self.FK__cart__NameUser__01142BA1">
+          <AssociationSet Name="FK__cart__NameUser__1A14E395" Association="Self.FK__cart__NameUser__1A14E395">
             <End Role="Users" EntitySet="Users" />
             <End Role="cart" EntitySet="cart" />
           </AssociationSet>
@@ -131,7 +120,7 @@
             <End Role="InfoProduct" EntitySet="InfoProduct" />
             <End Role="Image" EntitySet="Image" />
           </AssociationSet>
-          <AssociationSet Name="FK__InfoProdu__idPro__00200768" Association="Self.FK__InfoProdu__idPro__00200768">
+          <AssociationSet Name="FK__InfoProdu__idPro__1BFD2C07" Association="Self.FK__InfoProdu__idPro__1BFD2C07">
             <End Role="ProductType" EntitySet="ProductType" />
             <End Role="InfoProduct" EntitySet="InfoProduct" />
           </AssociationSet>
@@ -145,13 +134,12 @@
           <EntitySet Name="Images" EntityType="ComputerShopModel.Image" />
           <EntitySet Name="InfoProducts" EntityType="ComputerShopModel.InfoProduct" />
           <EntitySet Name="ProductTypes" EntityType="ComputerShopModel.ProductType" />
-          <EntitySet Name="sysdiagrams" EntityType="ComputerShopModel.sysdiagram" />
           <EntitySet Name="Users" EntityType="ComputerShopModel.User" />
           <AssociationSet Name="FK__cart__idProduct__628FA481" Association="ComputerShopModel.FK__cart__idProduct__628FA481">
             <End Role="InfoProduct" EntitySet="InfoProducts" />
             <End Role="cart" EntitySet="carts" />
           </AssociationSet>
-          <AssociationSet Name="FK__cart__NameUser__01142BA1" Association="ComputerShopModel.FK__cart__NameUser__01142BA1">
+          <AssociationSet Name="FK__cart__NameUser__1A14E395" Association="ComputerShopModel.FK__cart__NameUser__1A14E395">
             <End Role="User" EntitySet="Users" />
             <End Role="cart" EntitySet="carts" />
           </AssociationSet>
@@ -159,7 +147,7 @@
             <End Role="InfoProduct" EntitySet="InfoProducts" />
             <End Role="Image" EntitySet="Images" />
           </AssociationSet>
-          <AssociationSet Name="FK__InfoProdu__idPro__00200768" Association="ComputerShopModel.FK__InfoProdu__idPro__00200768">
+          <AssociationSet Name="FK__InfoProdu__idPro__1BFD2C07" Association="ComputerShopModel.FK__InfoProdu__idPro__1BFD2C07">
             <End Role="ProductType" EntitySet="ProductTypes" />
             <End Role="InfoProduct" EntitySet="InfoProducts" />
           </AssociationSet>
@@ -177,7 +165,7 @@
           <Property Name="Phone" Type="Int64" />
           <Property Name="idProduct" Type="Int32" />
           <NavigationProperty Name="InfoProduct" Relationship="ComputerShopModel.FK__cart__idProduct__628FA481" FromRole="cart" ToRole="InfoProduct" />
-          <NavigationProperty Name="User" Relationship="ComputerShopModel.FK__cart__NameUser__01142BA1" FromRole="cart" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="ComputerShopModel.FK__cart__NameUser__1A14E395" FromRole="cart" ToRole="User" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -200,7 +188,7 @@
           <Property Name="idProductType" Type="Int32" />
           <NavigationProperty Name="carts" Relationship="ComputerShopModel.FK__cart__idProduct__628FA481" FromRole="InfoProduct" ToRole="cart" />
           <NavigationProperty Name="Images" Relationship="ComputerShopModel.FK__Image__idProduct__534D60F1" FromRole="InfoProduct" ToRole="Image" />
-          <NavigationProperty Name="ProductType" Relationship="ComputerShopModel.FK__InfoProdu__idPro__00200768" FromRole="InfoProduct" ToRole="ProductType" />
+          <NavigationProperty Name="ProductType" Relationship="ComputerShopModel.FK__InfoProdu__idPro__1BFD2C07" FromRole="InfoProduct" ToRole="ProductType" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -208,17 +196,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="ProductType1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="InfoProducts" Relationship="ComputerShopModel.FK__InfoProdu__idPro__00200768" FromRole="ProductType" ToRole="InfoProduct" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="InfoProducts" Relationship="ComputerShopModel.FK__InfoProdu__idPro__1BFD2C07" FromRole="ProductType" ToRole="InfoProduct" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -229,7 +207,7 @@
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="Int64" />
           <Property Name="role" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="carts" Relationship="ComputerShopModel.FK__cart__NameUser__01142BA1" FromRole="User" ToRole="cart" />
+          <NavigationProperty Name="carts" Relationship="ComputerShopModel.FK__cart__NameUser__1A14E395" FromRole="User" ToRole="cart" />
         </EntityType>
         <Association Name="FK__cart__idProduct__628FA481">
           <End Type="ComputerShopModel.InfoProduct" Role="InfoProduct" Multiplicity="0..1" />
@@ -243,7 +221,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__cart__NameUser__01142BA1">
+        <Association Name="FK__cart__NameUser__1A14E395">
           <End Type="ComputerShopModel.User" Role="User" Multiplicity="0..1" />
           <End Type="ComputerShopModel.cart" Role="cart" Multiplicity="*" />
           <ReferentialConstraint>
@@ -267,7 +245,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InfoProdu__idPro__00200768">
+        <Association Name="FK__InfoProdu__idPro__1BFD2C07">
           <End Type="ComputerShopModel.ProductType" Role="ProductType" Multiplicity="0..1" />
           <End Type="ComputerShopModel.InfoProduct" Role="InfoProduct" Multiplicity="*" />
           <ReferentialConstraint>
@@ -325,17 +303,6 @@
               <MappingFragment StoreEntitySet="ProductType">
                 <ScalarProperty Name="ProductType1" ColumnName="ProductType" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ComputerShopModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

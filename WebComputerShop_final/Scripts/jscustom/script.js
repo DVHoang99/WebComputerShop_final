@@ -221,11 +221,11 @@ $("#Order").on("click", function () {
             success: function (data) {
                 if (data) {
                     alert("Đặt hàng thành công");
-                    shoppingCart.removeItemFromCartAll(name)
+
                 }
-                else
+                else {
                     alert("Bạn phải đăng nhập")
-                    alert("Đặt hàng không thành công");
+                }
                 window.location.reload();
             }
         })

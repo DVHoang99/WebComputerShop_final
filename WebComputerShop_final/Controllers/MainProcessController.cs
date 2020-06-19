@@ -166,20 +166,12 @@ namespace WebComputerShop_final.Controllers
         [HttpPost]
         public ActionResult AddProduct(ClassProduct a, Image imageModel, HttpPostedFileBase ImageFile)
         {
-            int c = 0;
-            if(a.idProduct =="laptop")
-            {
-                c = 2;
-            }else
-            {
-                c = 1;
-            }
                 ComputerShopEntities data = new ComputerShopEntities();
                 InfoProduct b = new InfoProduct();
                 b.Name = a.Name;
                 b.Price = a.price;
                 b.Description = a.description;
-                b.idProductType = c;
+            b.idProductType = a.idProduct;
                 data.InfoProducts.Add(b);
                 data.SaveChanges();
                 imageModel.idProduct = b.Id;
@@ -235,7 +227,7 @@ namespace WebComputerShop_final.Controllers
 
             } catch (Exception ex)
             {
-                return Json(0);
+                throw ex;
             }
 
         }
@@ -278,21 +270,11 @@ namespace WebComputerShop_final.Controllers
                 data.InfoProducts.Remove(u);
                 data.SaveChanges();
             }
-            int c = 0;
-            if (a.idProduct == "laptop")
-            {
-                c = 2;
-            }
-            else
-            {
-                c = 1;
-            }
-
             InfoProduct b = new InfoProduct();
             b.Name = a.Name;
             b.Price = a.price;
             b.Description = a.description;
-            b.idProductType = c;
+            b.idProductType =a.idProduct;
             data.InfoProducts.Add(b);
             data.SaveChanges();
             imageModel.idProduct = b.Id;

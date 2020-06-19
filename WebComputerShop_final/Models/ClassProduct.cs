@@ -13,10 +13,10 @@ namespace WebComputerShop_final.Models
         public string description { get; set; }
         public string tilte { get; set; }
 
-        public string idProductType { get; set; }
+        public int idProductType { get; set; }
 
 
-        public string idProduct { get; set; }
+        public int idProduct { get; set; }
         public string ImgPath { get; set; }
 
         public HttpPostedFileBase ImageFile { get; set; }
